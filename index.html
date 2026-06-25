@@ -11,27 +11,115 @@
 *{box-sizing:border-box;margin:0;padding:0}
 body{font-family:Arial,sans-serif;background:white;color:var(--dark)}
 html{scroll-behavior:smooth}
-nav{position:sticky;top:0;background:white;border-bottom:1px solid #ddd;padding:15px 30px;display:flex;justify-content:space-between;align-items:center;z-index:100}
-.logo{font-size:28px;font-weight:bold;color:var(--gold);transition:.3s}
+
+nav{
+position:sticky;top:0;background:white;border-bottom:1px solid #ddd;
+padding:15px 30px;display:flex;justify-content:space-between;
+align-items:center;z-index:100
+}
+
+.logo{
+font-size:28px;font-weight:bold;color:var(--gold);transition:.3s
+}
 .logo:hover{transform:scale(1.08) rotate(-2deg)}
-.nav-links a{text-decoration:none;color:#333;margin-left:20px}
-.hero{padding:80px 20px;text-align:center;background:var(--bg)}
+
+.nav-links a{
+text-decoration:none;color:#333;margin-left:20px
+}
+
+.hero{
+padding:80px 20px;text-align:center;background:var(--bg)
+}
 .hero h1{font-size:56px}
 .hero p{max-width:700px;margin:20px auto}
-.btn{background:var(--gold);color:white;padding:12px 24px;border:none;border-radius:6px;text-decoration:none}
-.section{padding:70px 20px;max-width:1200px;margin:auto}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:20px}
-.card{border:1px solid #ddd;padding:20px;border-radius:10px;transition:.3s}
-.card:hover{transform:translateY(-8px);box-shadow:0 10px 25px rgba(0,0,0,.12)}
-.progress{background:#eee;height:30px;border-radius:30px;overflow:hidden}
-.progress-bar{height:100%;width:65%;background:var(--gold);color:white;text-align:center;line-height:30px}
+
+.btn{
+background:var(--gold);color:white;padding:12px 24px;
+border:none;border-radius:6px;text-decoration:none
+}
+
+.section{
+padding:70px 20px;max-width:1200px;margin:auto
+}
+
+.grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:20px
+}
+
+.card{
+border:1px solid #ddd;padding:20px;border-radius:10px;
+transition:.3s
+}
+.card:hover{
+transform:translateY(-8px);
+box-shadow:0 10px 25px rgba(0,0,0,.12)
+}
+
+.progress{
+background:#eee;height:30px;border-radius:30px;overflow:hidden
+}
+
+.progress-bar{
+height:100%;width:65%;background:var(--gold);
+color:white;text-align:center;line-height:30px
+}
+
 form{display:grid;gap:12px}
 input,textarea,select{padding:12px}
-footer{text-align:center;padding:30px;background:var(--bg)}
-.reveal{opacity:0;transform:translateY(30px);transition:.7s}
+
+footer{
+text-align:center;padding:30px;background:var(--bg)
+}
+
+.reveal{
+opacity:0;transform:translateY(30px);
+transition:.7s
+}
 .reveal.show{opacity:1;transform:none}
+
+/* NEW: module video layout */
+.module-title{
+margin-top:30px;
+font-size:22px;
+font-weight:bold;
+color:var(--dark);
+}
+
+.video-grid{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+margin:15px 0 30px;
+}
+
+.video{
+border:1px solid #ddd;
+border-radius:10px;
+padding:15px;
+background:white;
+transition:.3s;
+}
+
+.video:hover{
+transform:translateY(-6px);
+box-shadow:0 8px 20px rgba(0,0,0,.1);
+}
+
+.video h4{
+font-size:14px;
+margin-bottom:5px;
+}
+
+.video p{
+font-size:12px;
+color:var(--light);
+}
+
 </style>
 </head>
+
 <body>
 
 <nav>
@@ -61,16 +149,58 @@ footer{text-align:center;padding:30px;background:var(--bg)}
 </div>
 </section>
 
+<!-- COURSES UPDATED -->
 <section id="courses" class="section reveal">
 <h2>Free Course Program</h2><br>
-<div class="grid">
-<div class="card">Module 1 - Introduction to Investing</div>
-<div class="card">Module 2 - Stock Market Basics</div>
-<div class="card">Module 3 - Financial Statements</div>
-<div class="card">Module 4 - Economics Fundamentals</div>
-<div class="card">Module 5 - Valuation Methods</div>
-<div class="card">Module 6 - Quantitative Finance</div>
+
+<div class="module-title">Module 1 - Introduction to Investing</div>
+<div class="video-grid">
+<div class="video"><h4>What is Investing?</h4><p>Video 1</p></div>
+<div class="video"><h4>Risk vs Return</h4><p>Video 2</p></div>
+<div class="video"><h4>Time Value of Money</h4><p>Video 3</p></div>
+<div class="video"><h4>Compound Interest</h4><p>Video 4</p></div>
 </div>
+
+<div class="module-title">Module 2 - Stock Market Basics</div>
+<div class="video-grid">
+<div class="video"><h4>How Stocks Work</h4><p>Video 1</p></div>
+<div class="video"><h4>Market Orders</h4><p>Video 2</p></div>
+<div class="video"><h4>Indexes Explained</h4><p>Video 3</p></div>
+<div class="video"><h4>Trading Basics</h4><p>Video 4</p></div>
+</div>
+
+<div class="module-title">Module 3 - Financial Statements</div>
+<div class="video-grid">
+<div class="video"><h4>Income Statement</h4><p>Video 1</p></div>
+<div class="video"><h4>Balance Sheet</h4><p>Video 2</p></div>
+<div class="video"><h4>Cash Flow</h4><p>Video 3</p></div>
+<div class="video"><h4>Reading Reports</h4><p>Video 4</p></div>
+</div>
+
+<div class="module-title">Module 4 - Economics Fundamentals</div>
+<div class="video-grid">
+<div class="video"><h4>Supply & Demand</h4><p>Video 1</p></div>
+<div class="video"><h4>Inflation</h4><p>Video 2</p></div>
+<div class="video"><h4>GDP Basics</h4><p>Video 3</p></div>
+<div class="video"><h4>Monetary Policy</h4><p>Video 4</p></div>
+</div>
+
+<div class="module-title">Module 5 - Valuation Methods</div>
+<div class="video-grid">
+<div class="video"><h4>DCF Basics</h4><p>Video 1</p></div>
+<div class="video"><h4>Multiples</h4><p>Video 2</p></div>
+<div class="video"><h4>Intrinsic Value</h4><p>Video 3</p></div>
+<div class="video"><h4>Comparables</h4><p>Video 4</p></div>
+</div>
+
+<div class="module-title">Module 6 - Quantitative Finance</div>
+<div class="video-grid">
+<div class="video"><h4>Probability Basics</h4><p>Video 1</p></div>
+<div class="video"><h4>Regression Models</h4><p>Video 2</p></div>
+<div class="video"><h4>Risk Modeling</h4><p>Video 3</p></div>
+<div class="video"><h4>Portfolio Theory</h4><p>Video 4</p></div>
+</div>
+
 </section>
 
 <section id="fundraising" class="section reveal">
