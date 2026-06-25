@@ -178,7 +178,7 @@
   <div class="nav-links">
     <button class="nav-btn active" onclick="showPage('home')">Home</button>
     <button class="nav-btn" onclick="showPage('contact')">Contact</button>
-    <button class="nav-btn" onclick="showPage('teachings')">Teachings</button>
+    <button class="nav-btn" onclick="showPage('Free Course')">Free Course</button>
     <button class="nav-btn" onclick="showPage('about')">About</button>
     <button class="nav-btn" onclick="showPage('team')">Team</button>
   </div>
@@ -192,7 +192,7 @@
       <h1>Precision.<br><em>Insight.</em><br>Results.</h1>
       <p class="hero-desc">We transform complex data into strategic clarity. Our quantitative methodologies empower leaders to make confident decisions backed by rigorous analysis and proven frameworks.</p>
       <button class="btn-gold" onclick="showPage('contact')">Contact Us</button>
-      <button class="btn-outline" onclick="showPage('teachings')">Free Course</button>
+      <button class="btn-outline" onclick="showPage('Free Course')">Free Course</button>
     </div>
     <div class="hero-stats">
       <div class="stat-card"><div class="stat-num">0</div><div class="stat-label">Clients Served</div></div>
@@ -352,7 +352,7 @@ function showPage(id){
   document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
   document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active')});
   document.getElementById('page-'+id).classList.add('active');
-  var order=['home','contact','teachings','about','team'];
+  var order=['home','contact','Free Course','about','team'];
   document.querySelectorAll('.nav-btn')[order.indexOf(id)].classList.add('active');
   window.scrollTo(0,0);
 }
