@@ -1,0 +1,501 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quantitative Insights</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet">
+  <style>
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --gold:#C9A84C;--gold-light:#E8C97A;--gold-dark:#8B6914;--gold-pale:#F5EDD8;
+      --white:#FFFFFF;--off:#FAFAF8;--dark:#1A1A1A;--mid:#4A4A4A;--light:#888880;
+      --border:rgba(201,168,76,0.25);
+    }
+    body{font-family:'Montserrat',sans-serif;background:var(--white);color:var(--dark);line-height:1.6}
+
+    /* NAV */
+    nav{position:sticky;top:0;z-index:100;background:var(--white);border-bottom:1px solid var(--border);
+      padding:0 2.5rem;display:flex;align-items:center;justify-content:space-between;height:70px;
+      box-shadow:0 2px 20px rgba(201,168,76,0.08)}
+    .nav-logo{display:flex;align-items:center;gap:14px}
+    .nav-logo img{height:42px;width:auto;object-fit:contain}
+    .nav-logo-text{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:600;
+      letter-spacing:0.08em;color:var(--gold);line-height:1.15}
+    .nav-logo-text span{display:block;font-weight:300;font-size:12px;letter-spacing:0.22em;
+      text-transform:uppercase;color:var(--mid)}
+    .nav-links{display:flex}
+    .nav-btn{background:none;border:none;border-bottom:2px solid transparent;cursor:pointer;
+      font-family:'Montserrat',sans-serif;font-size:10.5px;font-weight:500;letter-spacing:0.13em;
+      text-transform:uppercase;color:var(--mid);padding:0 1.1rem;height:70px;
+      transition:color .3s,border-color .3s}
+    .nav-btn:hover,.nav-btn.active{color:var(--gold);border-bottom-color:var(--gold)}
+
+    /* PAGES */
+    .page{display:none;animation:fadeIn .4s ease}
+    .page.active{display:block}
+    @keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+
+    /* HERO & FUNDRAISER */
+    .hero{padding:80px 3rem 70px;border-bottom:1px solid var(--border);
+      display:grid;grid-template-columns:1fr 1fr;gap:5rem;align-items:center;
+      max-width:1140px;margin:0 auto}
+    .eyebrow{font-size:10px;letter-spacing:0.22em;text-transform:uppercase;
+      color:var(--gold);font-weight:600;margin-bottom:1rem}
+    .hero h1{font-family:'Cormorant Garamond',serif;font-size:56px;font-weight:300;
+      line-height:1.12;color:var(--dark);margin-bottom:1.5rem}
+    .hero h1 em{color:var(--gold);font-style:italic}
+    .hero-desc{font-size:14px;line-height:1.85;color:var(--mid);margin-bottom:2.5rem;font-weight:300}
+    
+    /* FUNDRAISER METER */
+    .fundraiser-card{border:1px solid var(--border);padding:2.5rem;background:var(--off);
+      position:relative;overflow:hidden;box-shadow:0 8px 30px rgba(0,0,0,0.03)}
+    .fundraiser-card::before{content:'';position:absolute;top:0;left:0;width:4px;height:100%;background:var(--gold)}
+    .fundraiser-card h3{font-family:'Cormorant Garamond',serif;font-size:28px;font-weight:600;color:var(--dark);margin-bottom:0.5rem}
+    .fundraiser-card p{font-size:12.5px;color:var(--mid);margin-bottom:1.5rem;font-weight:300}
+    .meter-wrap{background:var(--white);border:1px solid var(--border);height:24px;border-radius:12px;overflow:hidden;margin-bottom:1rem}
+    .meter-fill{height:100%;background:linear-gradient(90deg, var(--gold-light), var(--gold-dark));width:65%; /* Change this % to update progress */
+      transition:width 1s ease-in-out}
+    .meter-stats{display:flex;justify-content:space-between;font-size:11px;font-weight:600;color:var(--gold);letter-spacing:0.05em;text-transform:uppercase}
+
+    /* SECTION */
+    .section{padding:70px 3rem;max-width:1140px;margin:0 auto}
+    .section-title{font-family:'Cormorant Garamond',serif;font-size:38px;font-weight:300;
+      color:var(--dark);margin-bottom:0.5rem}
+    .section-title em{color:var(--gold);font-style:italic}
+    .gold-rule{width:48px;height:2px;background:var(--gold);margin-bottom:2.5rem}
+    .section-sub{font-size:14px;color:var(--mid);line-height:1.85;max-width:600px;
+      margin-bottom:3rem;font-weight:300}
+
+    /* BUTTONS */
+    .btn-gold{display:inline-block;background:var(--gold);color:var(--white);border:none;cursor:pointer;
+      font-family:'Montserrat',sans-serif;font-size:10px;font-weight:600;letter-spacing:0.15em;
+      text-transform:uppercase;padding:15px 34px;transition:all .3s ease;text-decoration:none}
+    .btn-gold:hover{background:var(--dark);transform:translateY(-2px)}
+    .btn-outline{display:inline-block;background:transparent;color:var(--gold);
+      border:1px solid var(--gold);cursor:pointer;font-family:'Montserrat',sans-serif;
+      font-size:10px;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;
+      padding:15px 34px;transition:all .3s ease;margin-left:12px;text-decoration:none}
+    .btn-outline:hover{background:var(--gold);color:var(--white);transform:translateY(-2px)}
+
+    /* HOME INFO CARDS */
+    .info-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:2rem}
+    .info-card{border:1px solid var(--border);padding:2.5rem 2rem;background:var(--off);
+      border-top:3px solid var(--gold);transition:transform .3s, box-shadow .3s}
+    .info-card:hover{transform:translateY(-5px);box-shadow:0 10px 30px rgba(201,168,76,0.1)}
+    .info-icon{font-size:32px;color:var(--gold);margin-bottom:1.5rem}
+    .info-card h3{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;
+      margin-bottom:1rem;color:var(--dark)}
+    .info-card p{font-size:13px;line-height:1.8;color:var(--mid);font-weight:300}
+
+    /* CONTACT (FORMSPREE) */
+    .contact-wrap{display:grid;grid-template-columns:1fr 1.6fr;gap:4rem;align-items:start}
+    .contact-info h3{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:600;
+      color:var(--dark);margin-bottom:1.5rem}
+    .contact-detail{display:flex;align-items:flex-start;gap:12px;margin-bottom:1.25rem;
+      font-size:13px;color:var(--mid);font-weight:300;line-height:1.7}
+    .contact-detail-icon{color:var(--gold);font-size:18px;margin-top:2px;flex-shrink:0}
+    .form-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.5rem}
+    .form-group{display:flex;flex-direction:column;gap:8px}
+    .form-group.full{grid-column:1/-1}
+    .form-group label{font-size:10px;letter-spacing:0.14em;text-transform:uppercase;
+      color:var(--gold);font-weight:600}
+    .form-group input,.form-group textarea,.form-group select{
+      border:1px solid var(--border);background:var(--off);
+      font-family:'Montserrat',sans-serif;font-size:13px;color:var(--dark);
+      padding:14px 16px;outline:none;transition:border-color .3s, background .3s;border-radius:0;appearance:none}
+    .form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--gold);background:var(--white)}
+    .form-group textarea{min-height:150px;resize:vertical}
+
+    /* TEACHINGS (MODULES) */
+    .module-section{margin-bottom:4rem}
+    .module-header{margin-bottom:1.5rem; border-bottom:1px solid var(--border); padding-bottom:1rem}
+    .module-header h3{font-family:'Cormorant Garamond',serif; font-size:26px; color:var(--dark); font-weight:600}
+    .module-header span{font-size:11px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); font-weight:500; display:block; margin-bottom:5px}
+    
+    .video-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem}
+    .video-card{border:1px solid var(--border);overflow:hidden;cursor:pointer;transition:all .3s ease; background:var(--white)}
+    .video-card:hover{box-shadow:0 8px 25px rgba(201,168,76,0.15); transform:translateY(-3px)}
+    .video-thumb{height:140px;background:var(--gold-pale);display:flex;align-items:center;
+      justify-content:center;position:relative}
+    .play-btn{width:48px;height:48px;border-radius:50%;background:var(--gold);color:white;
+      display:flex;align-items:center;justify-content:center;font-size:16px;
+      transition:transform .3s;border:2px solid rgba(255,255,255,0.4)}
+    .video-card:hover .play-btn{transform:scale(1.15)}
+    .play-icon{width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;
+      border-left:14px solid white;margin-left:4px}
+    .video-info{padding:1.25rem 1rem}
+    .video-info h4{font-size:13px;font-weight:600;color:var(--dark);margin-bottom:6px; line-height:1.4}
+    .video-info p{font-size:11px;color:var(--light)}
+
+    /* NEWS PAGE */
+    .news-grid{display:grid; grid-template-columns:1fr; gap:2rem; max-width:800px; margin:0 auto}
+    .news-card{border:1px solid var(--border); padding:2.5rem; background:var(--off); display:flex; flex-direction:column; gap:1rem}
+    .news-date{font-size:10px; letter-spacing:0.15em; text-transform:uppercase; color:var(--gold); font-weight:600}
+    .news-card h3{font-family:'Cormorant Garamond',serif; font-size:28px; color:var(--dark); font-weight:600}
+    .news-card p{font-size:14px; color:var(--mid); line-height:1.8; font-weight:300}
+    .news-readmore{font-size:11px; font-weight:600; text-transform:uppercase; letter-spacing:0.1em; color:var(--gold); text-decoration:none; margin-top:1rem; align-self:flex-start; border-bottom:1px solid transparent; transition:border-color .3s}
+    .news-readmore:hover{border-color:var(--gold)}
+
+    /* GUESTS */
+    .featured-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:2rem}
+    .featured-card{border:1px solid var(--border);text-align:center;overflow:hidden;background:var(--white);transition:transform .3s}
+    .featured-card:hover{transform:translateY(-5px)}
+    .featured-avatar{height:150px;background:var(--gold-pale);display:flex;align-items:center;
+      justify-content:center;font-family:'Cormorant Garamond',serif;font-size:42px;
+      color:var(--gold);font-weight:300;border-bottom:1px solid var(--border)}
+    .featured-card-body{padding:1.5rem 1rem}
+    .featured-card h4{font-family:'Cormorant Garamond',serif;font-size:18px;font-weight:600;color:var(--dark)}
+    .featured-card .role{font-size:9.5px;letter-spacing:0.1em;text-transform:uppercase;color:var(--gold);margin-top:6px}
+    .featured-card p{font-size:11.5px;color:var(--mid);margin-top:10px;line-height:1.65;font-weight:300}
+
+    /* ABOUT */
+    .about-grid{display:grid;grid-template-columns:1fr 1.2fr;gap:5rem;align-items:center}
+    .about-img{width:100%;aspect-ratio:3/4;background:var(--gold-pale);border:1px solid var(--border);
+      display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;
+      font-size:72px;color:var(--gold);font-weight:300;box-shadow:20px 20px 0px var(--off), 20px 20px 0px 1px var(--border)}
+    .about-text p{font-size:14px;line-height:1.9;color:var(--mid);margin-bottom:1.5rem;font-weight:300}
+    .values-list{list-style:none;margin-top:2rem}
+    .values-list li{display:flex;align-items:center;gap:16px;padding:12px 0;
+      border-bottom:1px solid var(--border);font-size:13px;color:var(--dark);font-weight:400}
+    .values-list li::before{content:'✦';color:var(--gold);font-size:14px}
+
+    /* TEAM */
+    .team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:3rem 2rem}
+    .team-card{text-align:center}
+    .team-avatar{width:120px;height:120px;border-radius:50%;background:var(--gold-pale);
+      border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;
+      font-family:'Cormorant Garamond',serif;font-size:36px;color:var(--gold);
+      font-weight:300;margin:0 auto 1.25rem;box-shadow:0 10px 20px rgba(201,168,76,0.15)}
+    .team-card h4{font-family:'Cormorant Garamond',serif;font-size:22px;font-weight:600;color:var(--dark)}
+    .team-card .role{font-size:10px;letter-spacing:0.13em;text-transform:uppercase;color:var(--gold);margin-top:6px}
+    .team-divider{width:40px;height:2px;background:var(--gold-light);margin:12px auto}
+    .team-card p{font-size:13px;color:var(--mid);line-height:1.75;font-weight:300}
+
+    /* DIVIDER */
+    .section-divider{border:none;border-top:1px solid var(--border);margin:4rem 0}
+
+    /* FOOTER */
+    footer{border-top:1px solid var(--border);padding:2.5rem 3rem;
+      display:flex;align-items:center;justify-content:space-between;background:var(--off)}
+    .footer-left{display:flex;align-items:center;gap:12px}
+    .footer-left img{height:42px;width:auto;object-fit:contain}
+    .footer-logo-text{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--gold);font-weight:600;letter-spacing:0.05em}
+    footer p{font-size:12px;color:var(--mid);font-weight:300}
+  </style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-logo">
+    <img src="logo.png" alt="Quantitative Insights Logo" onerror="this.style.display='none'">
+    <div class="nav-logo-text">Quantitative<span>Insights</span></div>
+  </div>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="showPage('home')">Home</button>
+    <button class="nav-btn" onclick="showPage('teachings')">Modules</button>
+    <button class="nav-btn" onclick="showPage('news')">News</button>
+    <button class="nav-btn" onclick="showPage('about')">About</button>
+    <button class="nav-btn" onclick="showPage('team')">Team</button>
+    <button class="nav-btn" onclick="showPage('contact')">Contact</button>
+  </div>
+</nav>
+
+<div id="page-home" class="page active">
+  <div class="hero">
+    <div>
+      <p class="eyebrow">Student-Led Data Excellence</p>
+      <h1>Learn.<br><em>Analyze.</em><br>Impact.</h1>
+      <p class="hero-desc">We are a dedicated group of high school students turning complex data into actionable insights. Join us in learning how math, statistics, and logic can solve real-world problems.</p>
+      <button class="btn-gold" onclick="showPage('about')">Our Mission</button>
+      <button class="btn-outline" onclick="showPage('teachings')">Start Learning</button>
+    </div>
+    
+    <div class="fundraiser-card">
+      <p class="eyebrow" style="margin-bottom:0.5rem">Current Initiative</p>
+      <h3>Club Fundraiser</h3>
+      <p>Help us raise funds for people who are in need.</p>
+      <div class="meter-wrap">
+        <div class="meter-fill"></div>
+      </div>
+      <div class="meter-stats">
+        <span>$650 Raised</span>
+        <span>Goal: $1,000</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="section">
+    <p class="eyebrow">What We Do</p>
+    <h2 class="section-title">Our <em>Focus Areas</em></h2>
+    <div class="gold-rule"></div>
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-icon">📊</div>
+        <h3>Data Analysis</h3>
+        <p>Learning the basics of statistical modeling to find trends in sports, economics, and school data.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">💻</div>
+        <h3>Coding & Tech</h3>
+        <p>Using Python and Excel to clean, process, and visualize datasets like true data scientists.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-icon">🤝</div>
+        <h3>Community Impact</h3>
+        <p>Partnering with local organizations to help them understand their metrics and reach their goals.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="page-teachings" class="page">
+  <div class="section">
+    <p class="eyebrow">Video Curriculum</p>
+    <h2 class="section-title">Learning <em>Modules</em></h2>
+    <div class="gold-rule"></div>
+    <p class="section-sub">Step-by-step videos designed for high schoolers. Whether you're new to stats or looking for advanced coding tips, start here.</p>
+
+    <div class="module-section">
+      <div class="module-header">
+        <span>Module 01</span>
+        <h3>The Basics of Data</h3>
+      </div>
+      <div class="video-grid">
+        <div class="video-card"><div class="video-thumb"><div class="play-btn"><div class="play-icon"></div></div></div><div class="video-info"><h4>What is Quantitative Analysis?</h4><p>12 min · Intro</p></div></div>
+        <div class="video-card"><div class="video-thumb"><div class="play-btn"><div class="play-icon"></div></div></div><div class="video-info"><h4>Mean, Median, and Mode Review</h4><p>15 min · Math Basics</p></div></div>
+        <div class="video-card"><div class="video-thumb"><div class="play-btn"><div class="play-icon"></div></div></div><div class="video-info"><h4>How to Read a Spreadsheet</h4><p>10 min · Excel</p></div></div>
+        <div class="video-card"><div class="video-thumb"><div class="play-btn"><div class="play-icon"></div></div></div><div class="video-info"><h4>Spotting Bad Data</h4><p>18 min · Logic</p></div></div>
+      </div>
+    </div>
+
+    <div class="module-section">
+      <div class="module-header">
+        <span>Module 02</span>
+        <h3>Visualizing Information</h3>
+      </div>
+      <div class="video-grid">
+        <div class="video-card"><div class="video-thumb"><div class="play-btn"><div class="play-icon"></div></div></div><div class="video-info"><h4>Choosing the Right Chart</h4><p>14 min · Design</p></div></div>
+        <div class="video-card"><div class="video-thumb"><div class="play-btn"><div class="play-icon"></div></div></div><div class="video-info"><h4>Making Graphs in Google Sheets</h4><p>20 min · Tutorial</p></div></div>
+        <div class="video-card"><div class="video-thumb"><div class="play-btn"><div class="play-icon"></div></div></div><div class="video-info"><h4>Telling a Story with Data</h4><p>16 min · Communication</p></div></div>
+        <div class="video-card"><div class="video-thumb"><div class="play-btn"><div class="play-icon"></div></div></div><div class="video-info"><h4>Advanced Tableau Basics</h4><p>25 min · Software</p></div></div>
+      </div>
+    </div>
+
+    <div class="module-section">
+      <div class="module-header">
+        <span>Module 03</span>
+        <h3>Intro to Python</h3>
+      </div>
+      <div class="video-grid">
+        <div class="video-card"><div class="video-thumb"><div class="play-btn"><div class="play-icon"></div></div></div><div class="video-info"><h4>Setting up your Environment</h4><p>10 min · Setup</p></div></div>
+        <div class="video-card"><div class="video-thumb"><div class="play-btn"><div class="play-icon"></div></div></div><div class="video-info"><h4>Variables & Basic Math</h4><p>15 min · Coding</p></div></div>
+        <div class="video-card"><div class="video-thumb"><div class="play-btn"><div class="play-icon"></div></div></div><div class="video-info"><h4>Importing Pandas</h4><p>22 min · Data Science</p></div></div>
+        <div class="video-card"><div class="video-thumb"><div class="play-btn"><div class="play-icon"></div></div></div><div class="video-info"><h4>Your First Code Project</h4><p>30 min · Walkthrough</p></div></div>
+      </div>
+    </div>
+
+    <div class="module-section">
+      <div class="module-header">
+        <span>Module 04</span>
+        <h3>Real World Applications</h3>
+      </div>
+      <div class="video-grid">
+        <div class="video-card"><div class="video-thumb"><div class="play-btn"><div class="play-icon"></div></div></div><div class="video-info"><h4>Predicting Sports Stats</h4><p>18 min · Fun</p></div></div>
+        <div class="video-card"><div class="video-thumb"><div class="play-btn"><div class="play-icon"></div></div></div><div class="video-info"><h4>Basic Stock Market Math</h4><p>20 min · Finance</p></div></div>
+        <div class="video-card"><div class="video-thumb"><div class="play-btn"><div class="play-icon"></div></div></div><div class="video-info"><h4>Understanding Polling Data</h4><p>15 min · Social Science</p></div></div>
+        <div class="video-card"><div class="video-thumb"><div class="play-btn"><div class="play-icon"></div></div></div><div class="video-info"><h4>Climate Change Metrics</h4><p>25 min · Environment</p></div></div>
+      </div>
+    </div>
+
+    <div class="module-section">
+      <div class="module-header">
+        <span>Module 05</span>
+        <h3>College & Career Prep</h3>
+      </div>
+      <div class="video-grid">
+        <div class="video-card"><div class="video-thumb"><div class="play-btn"><div class="play-icon"></div></div></div><div class="video-info"><h4>Majoring in Data Science</h4><p>12 min · College</p></div></div>
+        <div class="video-card"><div class="video-thumb"><div class="play-btn"><div class="play-icon"></div></div></div><div class="video-info"><h4>Building a Data Portfolio</h4><p>18 min · Resumes</p></div></div>
+        <div class="video-card"><div class="video-thumb"><div class="play-btn"><div class="play-icon"></div></div></div><div class="video-info"><h4>Interview with a Data Analyst</h4><p>35 min · Career</p></div></div>
+        <div class="video-card"><div class="video-thumb"><div class="play-btn"><div class="play-icon"></div></div></div><div class="video-info"><h4>Where to Learn More</h4><p>10 min · Resources</p></div></div>
+      </div>
+    </div>
+
+    <hr class="section-divider">
+
+    <p class="eyebrow">Guest Speakers</p>
+    <h2 class="section-title">Distinguished <em>Guests</em></h2>
+    <div class="gold-rule"></div>
+    <div class="featured-grid">
+      <div class="featured-card"><div class="featured-avatar">A</div><div class="featured-card-body"><h4>Guest Name</h4><div class="role">University Professor</div><p>Shared insights on the transition from high school statistics to college-level data modeling.</p></div></div>
+      <div class="featured-card"><div class="featured-avatar">B</div><div class="featured-card-body"><h4>Guest Name</h4><div class="role">Local Entrepreneur</div><p>Discussed how basic data tracking helped grow their small business in our community.</p></div></div>
+      <div class="featured-card"><div class="featured-avatar">C</div><div class="featured-card-body"><h4>Guest Name</h4><div class="role">Software Engineer</div><p>Taught a special workshop on coding best practices and building a first tech resume.</p></div></div>
+      <div class="featured-card"><div class="featured-avatar">D</div><div class="featured-card-body"><h4>Guest Name</h4><div class="role">Financial Analyst</div><p>Explained the math behind saving, investing, and understanding the modern economy.</p></div></div>
+    </div>
+  </div>
+</div>
+
+<div id="page-news" class="page">
+  <div class="section">
+    <p class="eyebrow">Updates & Announcements</p>
+    <h2 class="section-title">Latest <em>News</em></h2>
+    <div class="gold-rule"></div>
+    
+    <div class="news-grid">
+      <div class="news-card">
+        <span class="news-date">October 15, 2026</span>
+        <h3>Fundraiser Hits 65% of Goal!</h3>
+        <p>Thanks to the generous support of our peers and parents, we have officially passed the halfway mark for our club fundraiser. The funds will be going directly towards registering our team for the State Data Challenge next spring.</p>
+        <a href="#" class="news-readmore">Read Full Update</a>
+      </div>
+      
+      <div class="news-card">
+        <span class="news-date">September 28, 2026</span>
+        <h3>New Module Added: Intro to Python</h3>
+        <p>We are thrilled to announce that Module 3 is now live. After heavily requested feedback from our latest club meeting, we've structured a 4-part video series to get absolute beginners coding in Python using Google Colab.</p>
+        <a href="#" class="news-readmore">View Module</a>
+      </div>
+
+      <div class="news-card">
+        <span class="news-date">September 05, 2026</span>
+        <h3>Welcome to a New School Year</h3>
+        <p>Quantitative Insights is back in session. We had over 30 new sign-ups at the club fair this week. Our first introductory meeting will be held next Thursday in Room 204. Bring your laptops and your curiosity!</p>
+        <a href="#" class="news-readmore">Meeting Details</a>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="page-about" class="page">
+  <div class="section">
+    <div class="about-grid">
+      <div class="about-img">QI</div>
+      <div class="about-text">
+        <p class="eyebrow" style="margin-bottom:0.75rem">Our Story</p>
+        <h2 class="section-title">About <em>Quantitative Insights</em></h2>
+        <div class="gold-rule" style="margin-top:1rem"></div>
+        
+        <p>Quantitative Insights began as a small group of ambitious high school students who realized something important: the future is entirely driven by data, yet most high school curriculums barely scratch the surface of how to use it.</p>
+        <p>We built this platform to create a bridge between the math we learn in the classroom and the complex problems we see in the real world. By working together, we make coding, statistics, and critical thinking accessible and achievable for students everywhere.</p>
+        <p>Our goal isn't just to memorize formulas. It's to build a community of curious minds equipped with the analytical tools to succeed in college, careers, and beyond.</p>
+        
+        <ul class="values-list">
+          <li>Making complex concepts easy and approachable for teens</li>
+          <li>Fostering teamwork and collaborative problem-solving</li>
+          <li>Applying classroom math to real-world scenarios</li>
+          <li>Preparing members for college-level research and STEM fields</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="page-team" class="page">
+  <div class="section">
+    <p class="eyebrow">Student Leadership</p>
+    <h2 class="section-title">The <em>Team</em></h2>
+    <div class="gold-rule"></div>
+    <p class="section-sub">Meet the dedicated students organizing events, recording modules, and leading the Quantitative Insights initiative.</p>
+    <div class="team-grid">
+      <div class="team-card"><div class="team-avatar">YN</div><h4>Your Name</h4><div class="role">Co President & Founder</div><div class="team-divider"></div><p>Started the initiative to share a passion for data. Leads club meetings and curates the video curriculum.</p></div>
+      <div class="team-card"><div class="team-avatar">TM</div><h4>Team Member</h4><div class="role">Co President & Founder</div><div class="team-divider"></div><p>Organizes guest speaker events and helps members troubleshoot their coding projects.</p></div>
+      <div class="team-card"><div class="team-avatar">SR</div><h4>Team Member</h4><div class="role">Head of Curriculum</div><div class="team-divider"></div><p>Researches and scripts the educational modules to ensure they are engaging and easy to understand.</p></div>
+      <div class="team-card"><div class="team-avatar">AK</div><h4>Team Member</h4><div class="role">Treasurer</div><div class="team-divider"></div><p>Manages club funds, tracks the fundraiser meter, and plans budgets for future competitions.</p></div>
+      <div class="team-card"><div class="team-avatar">LP</div><h4>Team Member</h4><div class="role">Media Director</div><div class="team-divider"></div><p>Edits the video modules and manages the website to keep everything looking professional.</p></div>
+      <div class="team-card"><div class="team-avatar">BN</div><h4>Team Member</h4><div class="role">Outreach Coordinator</div><div class="team-divider"></div><p>Handles recruitment, marketing, and getting new students excited about data analysis.</p></div>
+    </div>
+  </div>
+</div>
+
+<div id="page-contact" class="page">
+  <div class="section">
+    <p class="eyebrow">Get In Touch</p>
+    <h2 class="section-title">Send Us a <em>Message</em></h2>
+    <div class="gold-rule"></div>
+    <div class="contact-wrap">
+      <div class="contact-info">
+        <h3>We'd love to hear from you.</h3>
+        <p style="font-size:14px;color:var(--mid);line-height:1.85;font-weight:300;margin-bottom:2rem">Whether you're a student looking to join, a teacher with advice, or a potential guest speaker, please reach out!</p>
+        <div class="contact-detail"><span class="contact-detail-icon">📧</span><span>contact@quantitativeinsights.com</span></div>
+        <div class="contact-detail"><span class="contact-detail-icon">📍</span><span>Your High School Name, State</span></div>
+      </div>
+      <div>
+        
+        <form action="https://formspree.io/f/mrewkgod" method="POST" id="contact-form">
+          <div class="form-grid">
+            <div class="form-group">
+              <label>First Name</label>
+              <input type="text" name="first_name" placeholder="Your first name" required>
+            </div>
+            <div class="form-group">
+              <label>Last Name</label>
+              <input type="text" name="last_name" placeholder="Your last name" required>
+            </div>
+            <div class="form-group">
+              <label>Email Address</label>
+              <input type="email" name="email" placeholder="your@email.com" required>
+            </div>
+            <div class="form-group">
+              <label>School / Organization</label>
+              <input type="text" name="organization" placeholder="Where are you from?">
+            </div>
+            <div class="form-group full">
+              <label>Subject</label>
+              <select name="subject" required>
+                <option value="">Select a subject...</option>
+                <option value="Join Club">I want to join the club</option>
+                <option value="Guest Speaker">Guest Speaker Inquiry</option>
+                <option value="Question">I have a question about a module</option>
+                <option value="General">General Inquiry</option>
+              </select>
+            </div>
+            <div class="form-group full">
+              <label>Message</label>
+              <textarea name="message" placeholder="Tell us how we can assist you..." required></textarea>
+            </div>
+          </div>
+          <div style="margin-top:2rem">
+            <button type="submit" class="btn-gold">Send Message</button>
+          </div>
+        </form>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<footer>
+  <div class="footer-left">
+    <img src="logo.png" alt="Quantitative Insights Logo" onerror="this.style.display='none'">
+    <div class="footer-logo-text">Quantitative Insights</div>
+  </div>
+  <p>© 2026 Quantitative Insights. Built by Students.</p>
+</footer>
+
+<script>
+// Simple SPA Router
+function showPage(id){
+  document.querySelectorAll('.page').forEach(function(p){p.classList.remove('active')});
+  document.querySelectorAll('.nav-btn').forEach(function(b){b.classList.remove('active')});
+  document.getElementById('page-'+id).classList.add('active');
+  
+  // Find matching nav button to highlight
+  const btns = document.querySelectorAll('.nav-btn');
+  btns.forEach(btn => {
+    if(btn.textContent.toLowerCase().includes(id) || (id === 'teachings' && btn.textContent === 'Modules')){
+      btn.classList.add('active');
+    }
+  });
+  window.scrollTo({top: 0, behavior: 'smooth'});
+}
+
+// Clear form after Formspree submission (Formspree usually handles redirects, 
+// but if you set it to AJAX in the future, you'd handle it here)
+window.onbeforeunload = () => {
+  for(const form of document.getElementsByTagName('form')) {
+    form.reset();
+  }
+}
+</script>
+</body>
+</html>
