@@ -3,217 +3,221 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Open Path Labs | Tech & Finance</title>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+  <title>Open Path Labs | Financial Engineering & Literacy Platforms</title>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
   <style>
-    /* RESET & VARIABLES */
+    /* CORE ARCHITECTURE */
     * { margin: 0; padding: 0; box-sizing: border-box; }
     :root {
-      --bg-deep: #0B0F19;
-      --bg-card: #151C2C;
-      --bg-card-hover: #1C2539;
-      --text-main: #F8FAFC;
-      --text-muted: #94A3B8;
-      --accent-cyan: #00D4FF;
-      --accent-blue: #3B82F6;
-      --gradient-main: linear-gradient(135deg, var(--accent-cyan), var(--accent-blue));
-      --border-color: rgba(59, 130, 246, 0.2);
+      --bg-base: #030712;
+      --bg-surface: #0b1329;
+      --bg-surface-hover: #111c3e;
+      --text-primary: #f9fafb;
+      --text-secondary: #9ca3af;
+      --brand-cyan: #00f2fe;
+      --brand-blue: #4facfe;
+      --brand-gradient: linear-gradient(135deg, var(--brand-cyan) 0%, var(--brand-blue) 100%);
+      --border-subtle: rgba(79, 172, 254, 0.15);
+      --glass-bg: rgba(11, 19, 41, 0.7);
     }
+    
     body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--bg-deep);
-      color: var(--text-main);
-      line-height: 1.6;
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background-color: var(--bg-base);
+      color: var(--text-primary);
+      line-height: 1.7;
+      letter-spacing: -0.01em;
       overflow-x: hidden;
     }
 
-    /* TYPOGRAPHY */
-    h1, h2, h3, h4 { font-family: 'Space Grotesk', sans-serif; }
-    .gradient-text {
-      background: var(--gradient-main);
+    /* UTILITIES & TYPOGRAPHY */
+    h1, h2, h3, h4 { font-weight: 700; letter-spacing: -0.02em; }
+    .text-gradient {
+      background: var(--brand-gradient);
       -webkit-background-clip: text;
       -webkit-text-fill-color: transparent;
-      display: inline-block;
     }
+    .mono { font-family: 'JetBrains Mono', monospace; }
 
-    /* NAVIGATION */
+    /* STICKY INTERACTIVE NAVIGATION */
     nav {
-      position: sticky; top: 0; z-index: 100;
-      background: rgba(11, 15, 25, 0.85);
-      backdrop-filter: blur(12px);
-      border-bottom: 1px solid var(--border-color);
-      padding: 0 5%; height: 80px;
+      position: sticky; top: 0; z-index: 1000;
+      background: var(--glass-bg);
+      backdrop-filter: blur(16px);
+      -webkit-backdrop-filter: blur(16px);
+      border-bottom: 1px solid var(--border-subtle);
+      padding: 0 6%; height: 76px;
       display: flex; align-items: center; justify-content: space-between;
     }
-    .nav-brand {
-      font-family: 'Space Grotesk', sans-serif; font-size: 24px; font-weight: 700;
-      color: var(--text-main); display: flex; align-items: center; gap: 10px;
+    .nav-logo {
+      font-size: 19px; font-weight: 700; color: var(--text-primary);
+      display: flex; align-items: center; gap: 10px; cursor: pointer;
     }
-    .nav-brand span { font-size: 24px; }
-    .nav-links { display: flex; gap: 5px; align-items: center; }
-    .nav-btn {
-      background: none; border: none; color: var(--text-muted); cursor: pointer;
-      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
-      padding: 10px 16px; border-radius: 6px; transition: all 0.3s ease;
+    .nav-logo svg { width: 22px; height: 22px; fill: none; stroke: url(#logoGrad); stroke-width: 2.5; }
+    .nav-links { display: flex; gap: 8px; align-items: center; }
+    .nav-link {
+      background: none; border: none; color: var(--text-secondary); cursor: pointer;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 500;
+      padding: 8px 16px; border-radius: 6px; transition: all 0.2s ease;
     }
-    .nav-btn:hover, .nav-btn.active { color: var(--accent-cyan); background: rgba(0, 212, 255, 0.05); }
+    .nav-link:hover, .nav-link.active { color: var(--text-primary); background: rgba(255, 255, 255, 0.05); }
     
-    /* BUTTONS */
-    .btn-primary {
-      background: var(--gradient-main); color: #fff; border: none; cursor: pointer;
-      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
-      padding: 14px 28px; border-radius: 8px; transition: transform 0.3s, box-shadow 0.3s;
-      text-decoration: none; display: inline-block;
+    /* BUTTON ENGINE */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center;
+      font-family: 'Plus Jakarta Sans', sans-serif; font-size: 14px; font-weight: 600;
+      padding: 12px 24px; border-radius: 8px; transition: all 0.2s ease; text-decoration: none; cursor: pointer;
     }
-    .btn-primary:hover {
-      transform: translateY(-2px); box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
-    }
-    .btn-outline {
-      background: transparent; color: var(--accent-cyan);
-      border: 1px solid var(--accent-cyan); cursor: pointer;
-      font-family: 'Inter', sans-serif; font-size: 14px; font-weight: 600;
-      padding: 14px 28px; border-radius: 8px; transition: all 0.3s;
-    }
-    .btn-outline:hover { background: rgba(0, 212, 255, 0.1); transform: translateY(-2px); }
+    .btn-primary { background: var(--brand-gradient); color: #fff; border: none; }
+    .btn-primary:hover { transform: translateY(-1px); box-shadow: 0 8px 25px rgba(79, 172, 254, 0.35); }
+    .btn-secondary { background: rgba(255,255,255,0.05); color: var(--text-primary); border: 1px solid rgba(255,255,255,0.1); }
+    .btn-secondary:hover { background: rgba(255,255,255,0.1); border-color: rgba(255,255,255,0.2); }
+    .btn-nav-cta { background: var(--brand-gradient); color: #fff; border: none; padding: 8px 16px; font-size: 13px; margin-left: 12px; border-radius: 6px; }
+    .btn-nav-cta:hover { opacity: 0.95; }
 
-    .btn-donate {
-      background: transparent; color: #fff; border: 1px solid #fff;
-      padding: 10px 20px; border-radius: 6px; font-weight: 600; font-size: 13px;
-      margin-left: 15px; cursor: pointer; transition: 0.3s;
-    }
-    .btn-donate:hover { background: #fff; color: var(--bg-deep); }
-
-    /* PAGE ROUTING */
-    .page { display: none; animation: fadeIn 0.5s ease; min-height: 80vh; padding-bottom: 80px; }
+    /* ROUTING ENGINE */
+    .page { display: none; animation: slideUpFade 0.4s cubic-bezier(0.16, 1, 0.3, 1); min-height: 85vh; }
     .page.active { display: block; }
-    @keyframes fadeIn { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+    @keyframes slideUpFade { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: translateY(0); } }
 
-    /* LAYOUT CONTAINERS */
-    .container { max-width: 1200px; margin: 0 auto; padding: 80px 5%; }
-    .section-header { text-align: center; margin-bottom: 60px; }
-    .section-header h2 { font-size: 42px; margin-bottom: 15px; }
-    .section-header p { color: var(--text-muted); max-width: 600px; margin: 0 auto; font-size: 16px; }
+    .container { max-width: 1140px; margin: 0 auto; padding: 80px 6%; }
+    .header-block { text-align: center; margin-bottom: 64px; }
+    .header-block h2 { font-size: 38px; margin-bottom: 16px; letter-spacing: -0.03em; }
+    .header-block p { color: var(--text-secondary); max-width: 580px; margin: 0 auto; font-size: 16px; font-weight: 400; }
 
-    /* HERO SECTION */
+    /* STARTUP HERO ARCHITECTURE */
     .hero {
       display: flex; flex-direction: column; align-items: center; justify-content: center;
-      text-align: center; padding: 120px 5% 80px; position: relative;
+      text-align: center; padding: 140px 6% 100px; position: relative;
     }
     .hero::before {
-      content: ''; position: absolute; top: -20%; left: 50%; transform: translateX(-50%);
-      width: 600px; height: 600px; background: radial-gradient(circle, rgba(59,130,246,0.15) 0%, rgba(11,15,25,0) 70%);
+      content: ''; position: absolute; top: -10%; left: 50%; transform: translateX(-50%);
+      width: 700px; height: 500px; background: radial-gradient(circle, rgba(79,172,254,0.12) 0%, rgba(3,7,18,0) 75%);
       z-index: -1; pointer-events: none;
     }
-    .hero h1 { font-size: 64px; line-height: 1.1; margin-bottom: 24px; }
-    .hero p { font-size: 20px; color: var(--text-muted); max-width: 700px; margin-bottom: 40px; font-weight: 300; }
-    .hero-actions { display: flex; gap: 20px; justify-content: center; }
+    .hero h1 { font-size: 58px; line-height: 1.15; margin-bottom: 24px; letter-spacing: -0.04em; }
+    .hero p { font-size: 19px; color: var(--text-secondary); max-width: 680px; margin-bottom: 40px; font-weight: 400; }
+    .hero-ctas { display: flex; gap: 16px; justify-content: center; }
 
-    /* CARDS (TOOLS & LEARN) */
-    .grid-3 { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-    .card {
-      background: var(--bg-card); border: 1px solid var(--border-color);
-      border-radius: 12px; padding: 40px 30px; transition: all 0.3s;
-      display: flex; flex-direction: column; position: relative; overflow: hidden;
+    /* FLEXIBLE STARTUP CARD GRID */
+    .grid-layout { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 24px; }
+    .feature-card {
+      background: var(--bg-surface); border: 1px solid var(--border-subtle);
+      border-radius: 12px; padding: 36px 32px; transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+      display: flex; flex-direction: column; text-decoration: none; color: inherit;
     }
-    .card::before {
-      content: ''; position: absolute; top: 0; left: 0; width: 100%; height: 3px;
-      background: var(--gradient-main); transform: scaleX(0); transform-origin: left; transition: transform 0.4s;
-    }
-    .card:hover { transform: translateY(-8px); background: var(--bg-card-hover); border-color: var(--accent-cyan); box-shadow: 0 10px 30px rgba(0,0,0,0.3); }
-    .card:hover::before { transform: scaleX(1); }
-    .card-icon { font-size: 32px; margin-bottom: 20px; display: inline-block; background: rgba(59, 130, 246, 0.1); padding: 15px; border-radius: 12px; }
-    .card h3 { font-size: 22px; margin-bottom: 12px; }
-    .card p { color: var(--text-muted); font-size: 15px; margin-bottom: 25px; flex-grow: 1; }
-    .card-link { color: var(--accent-cyan); font-weight: 600; text-decoration: none; font-size: 14px; display: flex; align-items: center; gap: 5px; }
-    .card-link:hover { text-decoration: underline; }
+    .feature-card:hover { transform: translateY(-4px); background: var(--bg-surface-hover); border-color: var(--brand-cyan); box-shadow: 0 12px 30px rgba(0,0,0,0.4); }
+    .card-meta { display: flex; align-items: center; justify-content: space-between; margin-bottom: 20px; }
+    .card-badge { background: rgba(79, 172, 254, 0.1); color: var(--brand-blue); font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; padding: 4px 10px; border-radius: 4px; }
+    .card-icon-wrap { font-size: 24px; color: var(--brand-cyan); }
+    .feature-card h3 { font-size: 21px; margin-bottom: 12px; font-weight: 600; }
+    .feature-card p { color: var(--text-secondary); font-size: 14.5px; line-height: 1.6; margin-bottom: 24px; flex-grow: 1; }
+    .card-action-text { color: var(--brand-cyan); font-weight: 600; font-size: 13.5px; display: flex; align-items: center; gap: 6px; margin-top: auto; }
 
-    /* MISSION SECTION */
-    .mission-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-    .mission-text p { color: var(--text-muted); font-size: 17px; margin-bottom: 20px; line-height: 1.8; }
-    .mission-pillars { list-style: none; margin-top: 30px; }
-    .mission-pillars li {
-      display: flex; align-items: flex-start; gap: 15px; margin-bottom: 20px;
-      background: var(--bg-card); padding: 20px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.05);
-    }
-    .pillar-icon { font-size: 24px; color: var(--accent-cyan); }
-    .pillar-content h4 { font-size: 18px; margin-bottom: 5px; }
-    .pillar-content p { color: var(--text-muted); font-size: 14px; margin: 0; }
+    /* MISSION INTERACTION LAYOUT */
+    .split-layout { display: grid; grid-template-columns: 1.1fr 0.9fr; gap: 64px; align-items: center; }
+    .split-content h2 { font-size: 36px; margin-bottom: 20px; }
+    .split-content p { color: var(--text-secondary); font-size: 16px; margin-bottom: 20px; }
     
-    .mission-visual { position: relative; }
-    .code-window { background: #000; border-radius: 12px; padding: 20px; border: 1px solid var(--border-color); font-family: monospace; color: #10B981; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-    .code-header { display: flex; gap: 8px; margin-bottom: 15px; border-bottom: 1px solid #333; padding-bottom: 15px; }
-    .dot { width: 12px; height: 12px; border-radius: 50%; }
-    .dot.red { background: #EF4444; } .dot.yel { background: #F59E0B; } .dot.grn { background: #10B981; }
-
-    /* CONTACT & DONATE */
-    .dual-grid { display: grid; grid-template-columns: 1.5fr 1fr; gap: 50px; }
-    .form-group { margin-bottom: 20px; }
-    .form-group label { display: block; font-size: 13px; color: var(--text-muted); margin-bottom: 8px; font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
-    .form-group input, .form-group textarea {
-      width: 100%; padding: 15px; background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1);
-      border-radius: 8px; color: #fff; font-family: 'Inter'; font-size: 15px; transition: 0.3s;
-    }
-    .form-group input:focus, .form-group textarea:focus { outline: none; border-color: var(--accent-cyan); background: rgba(255,255,255,0.06); }
-    .form-group textarea { height: 150px; resize: vertical; }
+    .stack-list { list-style: none; margin-top: 32px; }
+    .stack-item { display: flex; gap: 16px; margin-bottom: 20px; background: rgba(255,255,255,0.02); padding: 20px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.04); }
+    .stack-icon { font-size: 20px; margin-top: 2px; }
+    .stack-body h4 { font-size: 16.5px; margin-bottom: 4px; font-weight: 600; }
+    .stack-body p { color: var(--text-secondary); font-size: 13.5px; margin: 0; line-height: 1.5; }
     
-    .donate-card {
-      background: var(--gradient-main); padding: 40px; border-radius: 12px; text-align: center; color: #fff;
-      display: flex; flex-direction: column; justify-content: center; align-items: center;
-    }
-    .donate-card h3 { font-size: 28px; margin-bottom: 15px; color: #fff; }
-    .donate-card p { font-size: 16px; margin-bottom: 25px; opacity: 0.9; }
-    .btn-donate-large {
-      background: #fff; color: var(--accent-blue); padding: 15px 30px; border-radius: 8px;
-      font-weight: 800; text-decoration: none; font-size: 16px; transition: transform 0.3s;
-    }
-    .btn-donate-large:hover { transform: scale(1.05); }
+    /* TECH / CODE TERMINAL GLASS */
+    .terminal-mock { background: #050b14; border-radius: 12px; padding: 24px; border: 1px solid var(--border-subtle); box-shadow: 0 25px 50px rgba(0,0,0,0.6); }
+    .terminal-header { display: flex; gap: 6px; margin-bottom: 20px; border-bottom: 1px solid rgba(255,255,255,0.06); padding-bottom: 14px; }
+    .term-dot { width: 10px; height: 10px; border-radius: 50%; }
+    .term-dot-r { background: #ff5f56; } .term-dot-y { background: #ffbd2e; } .term-dot-g { background: #27c93f; }
+    .terminal-mock pre { margin: 0; font-size: 13px; line-height: 1.6; color: #a6accd; white-space: pre-wrap; }
 
-    /* FOOTER */
-    footer { border-top: 1px solid rgba(255,255,255,0.05); padding: 40px 5%; text-align: center; color: var(--text-muted); font-size: 14px; }
+    /* DOUBLE-CARD INTERACTIVE FOOTER LAYOUT */
+    .contact-split { display: grid; grid-template-columns: 1.3fr 0.7fr; gap: 32px; }
+    .form-row { display: flex; gap: 16px; margin-bottom: 16px; }
+    .field-wrap { flex: 1; display: flex; flex-direction: column; gap: 6px; }
+    .field-wrap label { font-size: 12px; font-weight: 600; text-transform: uppercase; color: var(--text-secondary); letter-spacing: 0.05em; }
+    .field-wrap input, .field-wrap textarea {
+      width: 100%; padding: 14px; background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08);
+      border-radius: 6px; color: #fff; font-family: inherit; font-size: 14.5px; transition: border-color 0.2s;
+    }
+    .field-wrap input:focus, .field-wrap textarea:focus { outline: none; border-color: var(--brand-cyan); }
+    .field-wrap textarea { height: 140px; resize: none; }
+    
+    .pitch-cta-card {
+      background: radial-gradient(circle at top left, #111c3e, #0b1329);
+      border: 1px solid var(--border-subtle); padding: 40px; border-radius: 12px;
+      display: flex; flex-direction: column; justify-content: center; position: relative;
+    }
+    .pitch-cta-card h3 { font-size: 26px; margin-bottom: 12px; }
+    .pitch-cta-card p { font-size: 14.5px; color: var(--text-secondary); margin-bottom: 28px; line-height: 1.6; }
+
+    /* CLEAN MINIMALIST FOOTER */
+    footer { border-top: 1px solid rgba(255,255,255,0.04); padding: 36px 6%; text-align: center; color: var(--text-secondary); font-size: 13px; }
   </style>
 </head>
 <body>
 
+<svg style="display:none;">
+  <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+    <stop offset="0%" stop-color="#00f2fe" />
+    <stop offset="100%" stop-color="#4facfe" />
+  </linearGradient>
+</svg>
+
 <nav>
-  <div class="nav-brand">
-    <span>🌐</span> Open Path Labs
+  <div class="nav-logo" onclick="showPage('home')">
+    <svg viewBox="0 0 24 24"><path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/></svg>
+    Open Path Labs
   </div>
   <div class="nav-links">
-    <button class="nav-btn active" onclick="showPage('home')">Home</button>
-    <button class="nav-btn" onclick="showPage('tools')">Tools</button>
-    <button class="nav-btn" onclick="showPage('learn')">Learn</button>
-    <button class="nav-btn" onclick="showPage('mission')">Mission</button>
-    <button class="nav-btn" onclick="showPage('contact')">Contact</button>
-    <button class="btn-donate" onclick="window.open('https://gofundme.com', '_blank')">Donate</button>
+    <button class="nav-link active" onclick="showPage('home')">Overview</button>
+    <button class="nav-link" onclick="showPage('tools')">Sandbox Tools</button>
+    <button class="nav-link" onclick="showPage('learn')">Syllabus</button>
+    <button class="nav-link" onclick="showPage('mission')">Our Engine</button>
+    <button class="nav-link" onclick="showPage('contact')">Connect</button>
+    <button class="btn btn-nav-cta" onclick="window.open('https://gofundme.com', '_blank')">Fund the Mission</button>
   </div>
 </nav>
 
 <div id="page-home" class="page active">
   <div class="hero">
-    <h1>Bridging Code and <br><span class="gradient-text">Financial Literacy</span></h1>
-    <p>A student-built platform engineering accessible financial education, interactive coding tools, and real-world learning modules for the next generation.</p>
-    <div class="hero-actions">
-      <button class="btn-primary" onclick="showPage('tools')">Explore Tools</button>
-      <button class="btn-outline" onclick="showPage('learn')">Learn Finance</button>
+    <h1>Engineering Accessible <br><span class="text-gradient">Financial Literacy</span></h1>
+    <p>We build interactive visual tools and data-driven curriculum to simplify financial mathematics, capital allocation, and macroeconomics for emerging students globally.</p>
+    <div class="hero-ctas">
+      <button class="btn btn-primary" onclick="showPage('tools')">Explore Sandbox</button>
+      <button class="btn btn-secondary" onclick="showPage('learn')">Review Syllabus</button>
     </div>
   </div>
   
   <div class="container" style="padding-top: 0;">
-    <div class="grid-3">
-      <div class="card" onclick="showPage('tools')" style="cursor: pointer;">
-        <div class="card-icon">💻</div>
-        <h3>Digital Tools</h3>
-        <p>Interact with our custom-built financial simulators and calculators to see the math behind the money.</p>
+    <div class="grid-layout">
+      <div class="feature-card" onclick="showPage('tools')">
+        <div class="card-meta">
+          <span class="card-badge">Module Stack</span>
+          <span class="card-icon-wrap">💻</span>
+        </div>
+        <h3>Interactive Toolkit</h3>
+        <p>Custom modeling software built to simulate wealth accumulation patterns, budgeting architecture, and portfolio backtesting profiles without complex configurations.</p>
+        <span class="card-action-text">Launch Sandbox →</span>
       </div>
-      <div class="card" onclick="showPage('learn')" style="cursor: pointer;">
-        <div class="card-icon">📚</div>
-        <h3>Financial Education</h3>
-        <p>Curated modules breaking down complex topics like stocks, budgeting, and risk into digestible lessons.</p>
+      <div class="feature-card" onclick="showPage('learn')">
+        <div class="card-meta">
+          <span class="card-badge">Open Access</span>
+          <span class="card-icon-wrap">📊</span>
+        </div>
+        <h3>Structured Curriculum</h3>
+        <p>A multi-phase learning layer structured around micro-lessons that explain systemic market mechanics, risk dynamics, and strategic capital management.</p>
+        <span class="card-action-text">Explore Lessons →</span>
       </div>
-      <div class="card" onclick="window.open('https://gofundme.com', '_blank')" style="cursor: pointer;">
-        <div class="card-icon">🌍</div>
-        <h3>Nonprofit Mission</h3>
-        <p>Every donation funds our initiative to bring these resources to economically disadvantaged schools.</p>
+      <div class="feature-card" onclick="showPage('mission')">
+        <div class="card-meta">
+          <span class="card-badge">Social Layer</span>
+          <span class="card-icon-wrap">🌍</span>
+        </div>
+        <h3>Empowerment Layer</h3>
+        <p>As a student-led platform, our organizational focus centers on distributing physical and digital economic training assets to under-resourced learning cohorts.</p>
+        <span class="card-action-text">Read Our Stack →</span>
       </div>
     </div>
   </div>
@@ -221,28 +225,37 @@
 
 <div id="page-tools" class="page">
   <div class="container">
-    <div class="section-header">
-      <h2>Interactive <span class="gradient-text">Tools</span></h2>
-      <p>Built by our computer science team, these open-source tools allow you to model financial scenarios in real-time. No spreadsheets required.</p>
+    <div class="header-block">
+      <h2>Simulation <span class="text-gradient">Sandboxes</span></h2>
+      <p>A collection of algorithmic applications allowing students to interactively test theories, trace capital pipelines, and execute strategy variants.</p>
     </div>
-    <div class="grid-3">
-      <div class="card">
-        <div class="card-icon">📈</div>
+    <div class="grid-layout">
+      <div class="feature-card">
+        <div class="card-meta">
+          <span class="card-badge">JS Logic Engine</span>
+          <span class="card-icon-wrap">📈</span>
+        </div>
         <h3>Compound Growth Engine</h3>
-        <p>Visualize how time and interest rates affect your investments. Adjust variables to see the power of compounding over decades.</p>
-        <a href="#" class="card-link" onclick="alert('Tool Module Loading...')">Launch Tool →</a>
+        <p>A continuous mathematical simulation parsing capital optimization metrics. Real-time rendering tracks the scale variance of continuous reinvestments over expansive horizons.</p>
+        <span class="card-action-text" onclick="alert('Component mounting initiated — your custom logic script executes here.')">Initialize Engine →</span>
       </div>
-      <div class="card">
-        <div class="card-icon">📊</div>
-        <h3>Budget Visualizer</h3>
-        <p>Input your income and expenses to generate an automatic, interactive Sankey diagram of your cash flow.</p>
-        <a href="#" class="card-link" onclick="alert('Tool Module Loading...')">Launch Tool →</a>
+      <div class="feature-card">
+        <div class="card-meta">
+          <span class="card-badge">DOM DOM Data Rendering</span>
+          <span class="card-icon-wrap">📊</span>
+        </div>
+        <h3>Dynamic Budget Architect</h3>
+        <p>Interactive macro-modeling workspace converting continuous operational expenses into unified visual flows. Designed to clarify structural liquidity thresholds.</p>
+        <span class="card-action-text" onclick="alert('Component mounting initiated — your custom logic script executes here.')">Initialize Architect →</span>
       </div>
-      <div class="card">
-        <div class="card-icon">🤖</div>
-        <h3>Algo-Trading Sandbox</h3>
-        <p>Learn the basics of algorithmic trading. Write simple logic blocks and backtest them against historical market data.</p>
-        <a href="#" class="card-link" onclick="alert('Tool Module Loading...')">Launch Tool →</a>
+      <div class="feature-card">
+        <div class="card-meta">
+          <span class="card-badge">Array Processing</span>
+          <span class="card-icon-wrap">🤖</span>
+        </div>
+        <h3>Quantitative Strategy Sandbox</h3>
+        <p>A logical execution engine tracking conditional asset allocation parameters against isolated historical data trends. Designed to introduce code-driven trading structures.</p>
+        <span class="card-action-text" onclick="alert('Component mounting initiated — your custom logic script executes here.')">Initialize Sandbox →</span>
       </div>
     </div>
   </div>
@@ -250,34 +263,46 @@
 
 <div id="page-learn" class="page">
   <div class="container">
-    <div class="section-header">
-      <h2>Financial <span class="gradient-text">Curriculum</span></h2>
-      <p>Free, accessible education designed to bridge the gap between classroom math and real-world wealth building.</p>
+    <div class="header-block">
+      <h2>Educational <span class="text-gradient">Syllabus</span></h2>
+      <p>Clean, technical infrastructure engineered to deliver concrete foundational principles behind micro and macro-economic structures.</p>
     </div>
-    <div class="grid-3">
-      <div class="card">
-        <div class="card-icon">📝</div>
-        <h3>Budgeting Basics</h3>
-        <p>Master your cash flow. Learn the 50/30/20 rule, how to track hidden expenses, and the psychology behind spending.</p>
-        <a href="#" class="card-link">Start Module →</a>
+    <div class="grid-layout">
+      <div class="feature-card">
+        <div class="card-meta">
+          <span class="card-badge">Phase 01</span>
+          <span class="card-icon-wrap">📝</span>
+        </div>
+        <h3>Liquidity & Cash Optimization</h3>
+        <p>Deconstruct structural asset allocations. Understand operational tracking, expense management parameters, and cash processing mechanics.</p>
+        <span class="card-action-text">Review Documentation →</span>
       </div>
-      <div class="card">
-        <div class="card-icon">🏦</div>
-        <h3>Saving & Investing</h3>
-        <p>Understand the critical difference between saving cash and investing in assets. Learn about inflation and APY.</p>
-        <a href="#" class="card-link">Start Module →</a>
+      <div class="feature-card">
+        <div class="card-meta">
+          <span class="card-badge">Phase 02</span>
+          <span class="card-icon-wrap">🏦</span>
+        </div>
+        <h3>Asset Appreciation Frameworks</h3>
+        <p>Differentiating raw storage from generative asset performance. Tracking the explicit impacts of systemic inflation indices against asset yields.</p>
+        <span class="card-action-text">Review Documentation →</span>
       </div>
-      <div class="card">
-        <div class="card-icon">📉</div>
-        <h3>Intro to Stocks</h3>
-        <p>Demystify the stock market. We cover index funds, ETFs, market caps, and how to execute your first trade safely.</p>
-        <a href="#" class="card-link">Start Module →</a>
+      <div class="feature-card">
+        <div class="card-meta">
+          <span class="card-badge">Phase 03</span>
+          <span class="card-icon-wrap">📉</span>
+        </div>
+        <h3>Market Mechanics & Equities</h3>
+        <p>Unpacking index equity baskets, Exchange Traded Funds (ETFs), capital market frameworks, and standard valuation procedures.</p>
+        <span class="card-action-text">Review Documentation →</span>
       </div>
-      <div class="card">
-        <div class="card-icon">⚖️</div>
-        <h3>Risk vs. Reward</h3>
-        <p>Analyze risk tolerance, asset allocation, and the importance of diversification in building a resilient portfolio.</p>
-        <a href="#" class="card-link">Start Module →</a>
+      <div class="feature-card">
+        <div class="card-meta">
+          <span class="card-badge">Phase 04</span>
+          <span class="card-icon-wrap">⚖️</span>
+        </div>
+        <h3>Risk Profiles & Diversification</h3>
+        <p>Mathematical calculations evaluating structural modern portfolio optimization thresholds, systemic risk hedging, and variable correlations.</p>
+        <span class="card-action-text">Review Documentation →</span>
       </div>
     </div>
   </div>
@@ -285,59 +310,57 @@
 
 <div id="page-mission" class="page">
   <div class="container">
-    <div class="mission-grid">
-      <div class="mission-text">
-        <h2>Empowering Students Through <span class="gradient-text">Code & Capital</span></h2>
-        <br>
-        <p>Open Path Labs is a student-led nonprofit initiative. We recognized a critical flaw in modern education: students are taught advanced calculus but graduate without knowing how to file taxes, read a stock chart, or build a budget.</p>
-        <p>By leveraging our skills in Computer Science and Data Analysis, we build scalable digital tools that make learning finance interactive and engaging.</p>
+    <div class="split-layout">
+      <div class="split-content">
+        <h2>Developing Future Tech & <span class="text-gradient">Capital Allocators</span></h2>
+        <p>Open Path Labs runs at the intersection of quantitative software engineering and social enterprise. Modern academic pipelines frequently focus heavily on pure math theory while ignoring the practical mechanics of wealth building, asset preservation, and algorithmic tooling.</p>
+        <p>We engineer free web infrastructure to serve as a structural stepping stone, empowering students to build technical software mastery and critical data architecture concepts concurrently.</p>
         
-        <ul class="mission-pillars">
-          <li>
-            <div class="pillar-icon">💻</div>
-            <div class="pillar-content">
-              <h4>Computer Science</h4>
-              <p>We build our own platforms, dashboards, and algorithms from scratch.</p>
+        <ul class="stack-list">
+          <li class="stack-item">
+            <div class="stack-icon">💻</div>
+            <div class="stack-body">
+              <h4>Software Engineering Focus</h4>
+              <p>We advocate for construction-based learning—teaching web logic and algorithmic workflows alongside core structural calculations.</p>
             </div>
           </li>
           <li>
-            <div class="pillar-icon">📈</div>
-            <div class="pillar-content">
-              <h4>Financial Literacy</h4>
-              <p>Translating complex economic concepts into actionable teen-friendly advice.</p>
-            </div>
+            <div class="stack-item">
+              <div class="stack-icon">📈</div>
+              <div class="stack-body">
+                <h4>Systemic Economic Literacy</h4>
+                <p>Delivering uncompromised, technically sound financial content configured for rapid structural adaptation.</p>
+              </div>
+            </li>
           </li>
           <li>
-          
-            <div class="pillar-icon">🤝</div>
-            <div class="pillar-content">
-              <h4>Community Leadership</h4>
-              <p>Partnering with local schools and raising funds to ensure equitable access to tech.</p>
-            </div>
+            <div class="stack-item">
+              <div class="stack-icon">🤝</div>
+              <div class="stack-body">
+                <h4>Social Equity & Deployment</h4>
+                <p>Deploying targeted grants, learning materials, and modern educational instances straight to under-capitalized school districts.</p>
+              </div>
+            </li>
           </li>
         </ul>
       </div>
-      <div class="mission-visual">
-        <div class="code-window">
-          <div class="code-header">
-            <div class="dot red"></div><div class="dot yel"></div><div class="dot grn"></div>
+      <div class="split-visual">
+        <div class="terminal-mock">
+          <div class="terminal-header">
+            <div class="term-dot term-dot-r"></div><div class="term-dot term-dot-y"></div><div class="term-dot term-dot-g"></div>
           </div>
-          <pre style="margin:0;">
-<span style="color:#818CF8;">class</span> <span style="color:#FCD34D;">OpenPathLabs</span> {
-  <span style="color:#818CF8;">constructor</span>() {
-    <span style="color:#F472B6;">this</span>.mission = <span style="color:#A7F3D0;">"Accessibility"</span>;
-    <span style="color:#F472B6;">this</span>.tools = [<span style="color:#A7F3D0;">"Code"</span>, <span style="color:#A7F3D0;">"Finance"</span>];
-  }
+          <pre class="mono"><span style="color:#ff79c6;">import</span> { SystemicImpact } <span style="color:#ff79c6;">from</span> <span style="color:#f1fa8c;">'openpath-labs'</span>;
 
-  <span style="color:#60A5FA;">empowerStudent</span>(student) {
-    <span style="color:#818CF8;">if</span> (!student.hasKnowledge) {
-      student.learn(<span style="color:#F472B6;">this</span>.tools);
-      student.buildWealth();
-    }
-    <span style="color:#818CF8;">return</span> <span style="color:#A7F3D0;">"Future Leader Created"</span>;
-  }
-}
-          </pre>
+<span style="color:#ff79c6;">const</span> initiative = <span style="color:#ff79c6;">new</span> SystemicImpact({
+  mandate: <span style="color:#f1fa8c;">"Equitable Financial Engineering"</span>,
+  stack: [<span style="color:#f1fa8c;">"JavaScript"</span>, <span style="color:#f1fa8c;">"Economic Modeling"</span>]
+});
+
+<span style="color:#6272a4;">// Executing real-world community onboarding pipeline</span>
+initiative.deployResourceToDistricts({
+  scope: <span style="color:#f1fa8c;">"Underfunded Cohorts"</span>,
+  deliverable: <span style="color:#ff79c6;">true</span>
+});</pre>
         </div>
       </div>
     </div>
@@ -346,72 +369,77 @@
 
 <div id="page-contact" class="page">
   <div class="container">
-    <div class="section-header">
-      <h2>Get In <span class="gradient-text">Touch</span></h2>
-      <p>Want to join the team, use our tools in your classroom, or support our nonprofit mission?</p>
+    <div class="header-block">
+      <h2>Strategic <span class="text-gradient">Relations</span></h2>
+      <p>Initiate a connection path to coordinate platform licensing, suggest curriculum enhancements, or support our ecosystem initiatives.</p>
     </div>
     
-    <div class="dual-grid">
+    <div class="contact-split">
       <div>
-        <form action="#" method="POST" id="contact-form" onsubmit="event.preventDefault(); alert('Message sent!'); this.reset();">
-          <div style="display:flex; gap:20px;">
-            <div class="form-group" style="flex:1;">
-              <label>Name</label>
-              <input type="text" placeholder="John Doe" required>
+        <form action="#" method="POST" id="contact-form" onsubmit="event.preventDefault(); alert('Transmission logged successfully.'); this.reset();">
+          <div class="form-row">
+            <div class="field-wrap">
+              <label>Full Identity</label>
+              <input type="text" placeholder="Alex Chen" required>
             </div>
-            <div class="form-group" style="flex:1;">
-              <label>Email</label>
-              <input type="email" placeholder="john@example.com" required>
+            <div class="field-wrap">
+              <label>Communication Routing (Email)</label>
+              <input type="email" placeholder="alex@institution.org" required>
             </div>
           </div>
-          <div class="form-group">
-            <label>Subject</label>
-            <input type="text" placeholder="How can we help?">
+          <div class="form-group field-wrap" style="margin-bottom: 16px;">
+            <label>Subject Vector</label>
+            <input type="text" placeholder="System Integration / Partnership Proposal">
           </div>
-          <div class="form-group">
-            <label>Message</label>
-            <textarea placeholder="Write your message here..." required></textarea>
+          <div class="form-group field-wrap" style="margin-bottom: 24px;">
+            <label>Transmission Payload (Message)</label>
+            <textarea placeholder="Outline your initiative proposal or structural query here..." required></textarea>
           </div>
-          <button type="submit" class="btn-primary">Send Message</button>
+          <button type="submit" class="btn btn-primary">Dispatch Message</button>
         </form>
       </div>
       
-      <div class="donate-card">
-        <h3>Support Our Mission</h3>
-        <p>Open Path Labs relies on community support to keep our servers running and our curriculum free for disadvantaged school districts.</p>
-        <a href="https://gofundme.com" target="_blank" class="btn-donate-large">Donate via GoFundMe</a>
+      <div class="pitch-cta-card">
+        <h3>Ecosystem Venture Support</h3>
+        <p>Open Path Labs functions as an open-access entity. Capital contributions go directly toward managing active node servers and expanding educational coverage variables for underrepresented classrooms.</p>
+        <a href="https://gofundme.com" target="_blank" class="btn btn-secondary" style="border-color: var(--brand-cyan); color: var(--brand-cyan);">Access GoFundMe Portal</a>
       </div>
     </div>
   </div>
 </div>
 
 <footer>
-  <p>© 2026 Open Path Labs. A student-built nonprofit initiative.</p>
+  <p>© 2026 Open Path Labs. Engineered for scalable socio-economic literacy. Open Source Architecture.</p>
 </footer>
 
 <script>
-// Simple SPA Router
+// SPA Navigation Core Routing
 function showPage(id) {
-  // Hide all pages
-  document.querySelectorAll('.page').forEach(function(p) {
-    p.classList.remove('active');
-  });
-  // Remove active state from nav buttons
-  document.querySelectorAll('.nav-btn').forEach(function(b) {
-    b.classList.remove('active');
-  });
+  // Hide current active pages
+  document.querySelectorAll('.page').forEach(function(p) { p.classList.remove('active'); });
+  // Deactivate all nav links
+  document.querySelectorAll('.nav-link').forEach(function(b) { b.classList.remove('active'); });
   
-  // Show target page
-  document.getElementById('page-' + id).classList.add('active');
+  // Activate target page instance
+  const targetPage = document.getElementById('page-' + id);
+  if (targetPage) {
+    targetPage.classList.add('active');
+  }
   
-  // Highlight matching nav button
-  const btns = document.querySelectorAll('.nav-btn');
-  btns.forEach(btn => {
-    if(btn.textContent.toLowerCase().includes(id)) {
+  // Reflect state in navigation UI
+  const navButtons = document.querySelectorAll('.nav-link');
+  navButtons.forEach(btn => {
+    if(btn.textContent.toLowerCase().includes(id) || 
+       (id === 'home' && btn.textContent.toLowerCase().includes('overview')) ||
+       (id === 'tools' && btn.textContent.toLowerCase().includes('sandbox')) ||
+       (id === 'learn' && btn.textContent.toLowerCase().includes('syllabus')) ||
+       (id === 'mission' && btn.textContent.toLowerCase().includes('engine')) ||
+       (id === 'contact' && btn.textContent.toLowerCase().includes('connect'))) {
       btn.classList.add('active');
     }
   });
   
+  // Reset viewport to top on page change
   window.scrollTo({top: 0, behavior: 'smooth'});
 }
 </script>
